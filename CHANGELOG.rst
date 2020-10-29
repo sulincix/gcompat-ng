@@ -21,6 +21,7 @@ string
 
 * Add historical, non-POSIX strerror_r definition.
 
+* Add __explicit_bzero_chk
 
 1.0.0 (2020-09-27)
 ==================

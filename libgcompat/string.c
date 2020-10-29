@@ -87,6 +87,14 @@ void *__memset_chk(void *s, int c, size_t n, size_t buflen)
 	return memset(s, c, n);
 }
 
+void __explicit_bzero_chk(void *s, size_t n, size_t buflen)
+{
+	assert(s != NULL);
+	assert(buflen >= n);
+
+	explicit_bzero(s, n);
+}
+
 /**
  * Find byte in memory.
  *
