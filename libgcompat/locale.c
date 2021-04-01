@@ -1,11 +1,10 @@
+#include <dlfcn.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "alias.h" /* alias */
 #include "internal.h"
-
-void *__newlocale(int, const char *, void *);
-void *__duplocale(void *);
 
 struct glibc_locale {
 	/* hopefully nobody pokes at this */
@@ -18,11 +17,13 @@ struct glibc_locale {
 	char *__names[13];
 };
 
+typedef locale_t (*newlocale_t)(int mask, const char *name, locale_t base);
+
 const unsigned short **__ctype_b_loc(void);
 const int32_t **__ctype_tolower_loc(void);
 const int32_t **__ctype_toupper_loc(void);
 
-struct glibc_locale *newlocale(int mask, const char *name, locale_t base) {
+struct glibc_locale *__newlocale(int mask, const char *name, locale_t base) {
 	struct glibc_locale *ret = (void*)base;
 	if(ret == NULL) {
 		ret = calloc(1, sizeof(struct glibc_locale));
@@ -31,7 +32,8 @@ struct glibc_locale *newlocale(int mask, const char *name, locale_t base) {
 	}
 
 	/* relies on sizeof(*locale_t) <= sizeof(ret.__locales) */
-	__newlocale(mask, name, ret);
+	newlocale_t real_newlocale = (newlocale_t)dlsym(RTLD_NEXT, "__newlocale");
+	real_newlocale(mask, name, (void*)ret);
 
 	ret->__ctype_b = *__ctype_b_loc();
 	ret->__ctype_tolower = *__ctype_tolower_loc();
@@ -43,9 +45,13 @@ struct glibc_locale *newlocale(int mask, const char *name, locale_t base) {
 	return ret;
 }
 
-void *duplocale(struct glibc_locale *loc) {
+alias(__newlocale, newlocale);
+
+void *__duplocale(struct glibc_locale *loc) {
 	struct glibc_locale *ret = malloc(sizeof *ret);
 	if(!ret) return NULL;
 	*ret = *loc;
 	return ret;
 }
+
+alias(__duplocale, duplocale);
