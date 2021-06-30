@@ -1,5 +1,6 @@
 #include <sys/select.h>
 #include "internal.h"
+#include "alias.h"	/* alias */
 
 #define REASON_FD_SET_OVERFLOW                                                 \
 	"Fault: Overflow in fd_set detected.\n"                                \
@@ -16,3 +17,4 @@ unsigned long __fdelt_chk(unsigned long size)
 	                            FD_SETSIZE);
 	return size / (sizeof(unsigned long) << 3);
 }
+alias(__fdelt_chk, __fdelt_warn);
