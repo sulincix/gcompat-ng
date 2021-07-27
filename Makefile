@@ -17,6 +17,7 @@ LIBGCOMPAT_SRC = \
 	libgcompat/netdb.c		\
 	libgcompat/pthread.c		\
 	libgcompat/pwd.c		\
+	libgcompat/random_r.c		\
 	libgcompat/readlink.c		\
 	libgcompat/realpath.c		\
 	libgcompat/resolv.c		\
