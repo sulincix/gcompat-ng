@@ -1,7 +1,7 @@
 #include <assert.h> /* assert */
 #include <stdarg.h> /* va_list, va_start, va_end */
 #include <stddef.h> /* size_t */
-#include <wchar.h>  /* wchar_t, *wprintf */
+#include <wchar.h>  /* wchar_t, *wprintf, mbstate_t */
 
 int __vswprintf_chk(wchar_t *s, size_t n, int flag, size_t slen,
                     const wchar_t *format, va_list ap);
@@ -134,4 +134,9 @@ long int wcstol_l(const wchar_t *nptr, wchar_t **endptr, int base,
 double wcstod_l(const wchar_t *nptr, wchar_t **endptr, locale_t loc)
 {
 	return wcstod(nptr, endptr);
+}
+
+
+size_t __mbrlen(const char *restrict s, size_t n, mbstate_t *restrict st) {
+    return mbrlen(s, n, st);
 }
