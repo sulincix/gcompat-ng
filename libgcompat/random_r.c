@@ -103,6 +103,7 @@ int initstate_r(unsigned seed, char *restrict state, size_t size,
 		return -1;
 	}
 
+	buf->x = (int32_t*)state + 1;
 	savestate_r(buf);
 	if (size < 32) {
 		buf->n = 0;
@@ -115,7 +116,6 @@ int initstate_r(unsigned seed, char *restrict state, size_t size,
 	} else {
 		buf->n = 63;
 	}
-	buf->x = (int32_t*)state + 1;
 	srandom_r(seed, buf);
 	savestate_r(buf);
 	return 0;
