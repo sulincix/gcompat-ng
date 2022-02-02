@@ -234,3 +234,8 @@ int execv(const char *pathname, char *const argv[]) {
 int execvp(const char *file, char *const argv[]) {
 	return execv(file, argv);
 }
+
+int __close(int fd)
+{
+	return close(fd);
+}
