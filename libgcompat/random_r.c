@@ -45,10 +45,10 @@ struct random_data {
 	int32_t *x;		/* int32_t *fptr */
 	int32_t *unused_1;	/* int32_t *rptr */
 	int32_t *unused_2;	/* int32_t *state */
-	int n;			/* int rand_type */
-	int i;			/* int rand_deg */
-	int j;			/* int rand_sep */
-	int32_t *unused_3;	/* int32_t *end_ptr */
+	int unused_3;		/* int rand_type */
+	int unused_4;		/* int rand_deg */
+	int unused_5;		/* int rand_sep */
+	int32_t *unused_6;	/* int32_t *end_ptr */
 };
 
 static uint32_t lcg31(uint32_t x) {
@@ -59,65 +59,62 @@ static uint64_t lcg64(uint64_t x) {
 	return 6364136223846793005ull*x + 1;
 }
 
-static void savestate_r(struct random_data *buf) {
-	buf->x[-1] = (buf->n<<16)|(buf->i<<8)|buf->j;
-}
-
-static void loadstate_r(uint32_t *state, struct random_data *buf) {
-	buf->x = (int32_t *)state + 1;
-	buf->n = buf->x[-1]>>16;
-	buf->i = (buf->x[-1]>>8)&0xff;
-	buf->j = buf->x[-1]&0xff;
-}
-
 int srandom_r(unsigned seed, struct random_data *buf) {
 	int k;
 	uint64_t s = seed;
+	int n, i, j;
 
 	if (buf == NULL) {
 		return -1;
 	}
 
-	if (buf->n > 63) {
+	n = buf->x[-1]>>16;
+	i = (buf->x[-1]>>8)&0xff;
+	j = buf->x[-1]&0xff;
+
+	if (n > 63) {
 		return -1;
-	} else if (buf->n == 0) {
+	} else if (n == 0) {
 		buf->x[0] = s;
 		return 0;
 	}
-	buf->i = buf->n == 31 || buf->n == 7 ? 3 : 1;
-	buf->j = 0;
-	for (k = 0; k < buf->n; k++) {
+	i = n == 31 || n == 7 ? 3 : 1;
+	j = 0;
+	for (k = 0; k < n; k++) {
 		s = lcg64(s);
 		buf->x[k] = s>>32;
 	}
 	/* make sure x contains at least one odd number */
 	buf->x[0] |= 1;
 
+	buf->x[-1] = (n<<16)|(i<<8)|j;
+
 	return 0;
 }
 
 int initstate_r(unsigned seed, char *restrict state, size_t size,
 		struct random_data *restrict buf) {
+	int n;
+
 	if (size < 8) {
 		errno = EINVAL;
 		return -1;
 	}
 
-	buf->x = (int32_t*)state + 1;
-	savestate_r(buf);
 	if (size < 32) {
-		buf->n = 0;
+		n = 0;
 	} else if (size < 64) {
-		buf->n = 7;
+		n = 7;
 	} else if (size < 128) {
-		buf->n = 15;
+		n = 15;
 	} else if (size < 256) {
-		buf->n = 31;
+		n = 31;
 	} else {
-		buf->n = 63;
+		n = 63;
 	}
+	buf->x = (int32_t*)state + 1;
+	buf->x[-1] = (n<<16)|(3<<8); /* (n<<16)|(i<<8)|j */
 	srandom_r(seed, buf);
-	savestate_r(buf);
 	return 0;
 }
 
@@ -127,30 +124,35 @@ int setstate_r(char *restrict state, struct random_data *restrict buf) {
 		return -1;
 	}
 
-	savestate_r(buf);
-	loadstate_r((uint32_t*)state, buf);
+	buf->x = (int32_t*)state + 1;
 	return 0;
 }
 
 int random_r(struct random_data *restrict buf, int32_t *restrict result) {
 	long k;
+	int n, i, j;
 
 	if (result == NULL || buf == NULL) {
 		errno = EINVAL;
 		return -1;
 	}
 
-	if (buf->n == 0) {
+	n = buf->x[-1]>>16;
+	i = (buf->x[-1]>>8)&0xff;
+	j = buf->x[-1]&0xff;
+
+	if (n == 0) {
 		k = buf->x[0] = lcg31(buf->x[0]);
 		goto end;
 	}
-	buf->x[buf->i] += buf->x[buf->j];
-	k = buf->x[buf->i]>>1;
-	if (++(buf->i) == buf->n) {
-		buf->i = 0;
-	} if (++(buf->j) == buf->n) {
-		buf->j = 0;
+	buf->x[i] += buf->x[j];
+	k = buf->x[i]>>1;
+	if (++i == n) {
+		i = 0;
+	} if (++j == n) {
+		j = 0;
 	}
+	buf->x[-1] = (n<<16)|(i<<8)|j;
 end:
 	*result = k;
 	return 0;
