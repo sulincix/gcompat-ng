@@ -33,3 +33,5 @@ unsigned int gnu_dev_minor(dev_t dev)
 }
 
 void *__libc_stack_end = NULL;
+
+char __libc_single_threaded = 0;
