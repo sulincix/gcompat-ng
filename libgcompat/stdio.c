@@ -234,3 +234,16 @@ char *tmpnam_r(char *s)
 
 	return tmpnam(s);
 }
+
+int
+__dprintf_chk (int d, int flags, const char *format, ...)
+{
+	va_list arg;
+	int done;
+
+	va_start(arg, format);
+	done = vdprintf(d, format, arg);
+	va_end(arg);
+
+	return done;
+}
