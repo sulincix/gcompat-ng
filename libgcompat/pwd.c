@@ -77,7 +77,7 @@ int fgetpwent_r(FILE *stream, struct passwd *pwd, char *buf, size_t len,
 {
 	assert(stream != NULL);
 
-	return fgetpwent_r(stream, pwd, buf, len, result);
+	return __fgetpwent_r(stream, pwd, buf, len, result);
 }
 
 /**
