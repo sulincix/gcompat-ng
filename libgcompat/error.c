@@ -22,6 +22,6 @@ void error(int status, int errnum, const char *format, ...)
 	if (errnum != 0) {
 		fputs(": ", stderr);
 		fputs(strerror(errnum), stderr);
-		fputc('\n', stderr);
 	}
+	fputc('\n', stderr);
 }
