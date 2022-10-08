@@ -1,5 +1,13 @@
+#include <sys/auxv.h>		/* getauxval */
 #include <sys/syscall.h>
-#include <unistd.h> /* size_t */
+#include <unistd.h>		/* size_t */
+
+
+unsigned long __getauxval(unsigned long type)
+{
+	return getauxval(type);
+}
+
 
 #ifdef SYS__sysctl
 
