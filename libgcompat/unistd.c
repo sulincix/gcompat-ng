@@ -231,8 +231,19 @@ int execv(const char *pathname, char *const argv[]) {
 	return execve(pathname, argv, environ);
 }
 
+static int (*real_execvp)(const char *file, char *const argv[]);
 int execvp(const char *file, char *const argv[]) {
-	return execv(file, argv);
+	if(!strcmp(file, "/proc/self/exe")) {
+		return execv(file, argv);
+	}
+	if(real_execvp == NULL) {
+		real_execvp = dlsym(RTLD_NEXT, "execvp");
+		if(real_execvp == NULL) {
+			errno = ENOSYS;
+			return -1;
+		}
+	}
+	return real_execvp(file, argv);
 }
 
 int __close(int fd)
