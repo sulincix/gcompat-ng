@@ -49,6 +49,8 @@ stdio
 
 * Add __dprintf_chk, using vdprintf as a backing function.
 
+* Hook fopen to intercept attempts at opening /proc/self/exe.  Issue #349.
+
 string
 ------
 

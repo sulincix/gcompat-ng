@@ -1,8 +1,12 @@
 #define _GNU_SOURCE /* fgets_unlocked */
 #include <assert.h> /* assert */
+#include <dlfcn.h>  /* dlsym, RTLD_NEXT */
+#include <errno.h>  /* errno, ENOSYS */
+#include <limits.h> /* PATH_MAX */
 #include <stdarg.h> /* va_list, va_start, va_end */
 #include <stddef.h> /* NULL, size_t */
-#include <stdio.h>  /* feof, fgets, fread, puts, v*printf */
+#include <stdio.h>  /* feof, fgets, fopen, fread, puts, v*printf */
+#include <string.h> /* strcmp */
 
 int __vasprintf_chk(char **strp, int flag, const char *format, va_list ap);
 int __vfprintf_chk(FILE *stream, int flag, const char *format, va_list ap);
@@ -74,6 +78,33 @@ char *__fgets_unlocked_chk(char *s, size_t slen, int n, FILE *stream)
 	assert(stream != NULL);
 
 	return fgets_unlocked(s, n, stream);
+}
+
+/**
+ * Open a stream.
+ */
+
+ssize_t readlink(const char *path, char *buf, size_t len);
+static FILE *(*real_fopen)(const char *, const char *);
+
+FILE *fopen(const char *restrict pathname, const char *restrict mode)
+{
+	if (real_fopen == NULL) {
+		real_fopen = dlsym(RTLD_NEXT, "fopen");
+		if (real_fopen == NULL) {
+			errno = ENOSYS;
+			return NULL;
+		}
+	}
+
+	if (!strcmp(pathname, "/proc/self/exe")) {
+		char real_self[PATH_MAX];
+		if (readlink("/proc/self/exe", real_self, PATH_MAX) == -1) {
+			return NULL;
+		}
+		return real_fopen(real_self, mode);
+	}
+	return real_fopen(pathname, mode);
 }
 
 /**
