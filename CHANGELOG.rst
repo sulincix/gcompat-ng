@@ -11,17 +11,66 @@
 1.1 (202?-??-??)
 ================
 
+For detailed contributor information, see the gcompat Git repository.
+
+error
+-----
+
+* Always append a newline when error() is called, bringing behaviour in
+  line with glibc.
+
+gnulib
+------
+
+* Add __fdelt_warn as an alias of __fdelt_chk.
+
 locale
 ------
 
 * Redesign newlocale, courtesy of rcombs.
+
+misc
+----
+
+* Add a __libc_single_threaded stub.  Currently it always says we are MT.
+
+pwd
+---
+
+* Fix an issue where fgetpwent_r may infinitely recurse.
+
+random
+------
+
+* New module, containing re-entrant random functions.
+
+stdio
+-----
+
+* Add __dprintf_chk, using vdprintf as a backing function.
 
 string
 ------
 
 * Add historical, non-POSIX strerror_r definition.
 
-* Add __explicit_bzero_chk
+* Add __explicit_bzero_chk.
+
+sysctl
+------
+
+* Add __getauxval alias.
+
+unistd
+------
+
+* Fix behaviour of execvp when called with a non-/proc/self/exe argument.
+
+wchar
+-----
+
+* Add __mbrlen alias for mbrlen.
+
 
 1.0.0 (2020-09-27)
 ==================
