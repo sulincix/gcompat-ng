@@ -77,3 +77,22 @@ void __sched_cpufree(cpu_set_t *__set)
 {
 	return CPU_FREE(__set);
 }
+
+/**
+ * Gets the mutex kind (non-portable variant).
+ */
+int pthread_mutexattr_getkind_np(const pthread_mutexattr_t *attr, int *kind)
+{
+	return pthread_mutexattr_gettype(attr, kind);
+}
+
+/**
+ * Sets the mutex kind (non-portable variant).
+ */
+int pthread_mutexattr_setkind_np(pthread_mutexattr_t *attr, int kind)
+{
+	if (kind > PTHREAD_MUTEX_ERRORCHECK || kind < PTHREAD_MUTEX_NORMAL)
+		return EINVAL;
+
+	return pthread_mutexattr_settype(attr, kind);
+}
