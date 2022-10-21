@@ -3,12 +3,11 @@
 ====================
 :Authors:
  * **A. Wilcox**, initial concept, maintainer, lead developer
- * **Adélie Software and its contributors**, development
+ * **Adélie Linux and its contributors**, development
 :Status:
  Production
 :Copyright:
- © 2020 Adélie Software in the Public Benefit, Inc. and its contributors.
- NCSA open source license.
+ © 2022 Adélie Linux and its contributors.  NCSA open source license.
 
  
 .. image:: https://img.shields.io/badge/chat-on%20IRC-blue.svg
@@ -227,9 +226,9 @@ gcompat is released by the Adélie Linux project in the hopes that it is useful
 to the community.  Current issues may be found at our BTS_; you may also
 `submit an issue`_ there.
 
-For general discussion, questions, or to submit a patch, please use the
-`gcompat mailing list`_.
+For general discussion, questions, or to submit a patch, please use the gcompat
+mailing list, hosted on `WTI Lists`_.
 
-.. _BTS: https://bts.adelielinux.org/buglist.cgi?product=gcompat&resolution=---
-.. _`submit an issue`: https://bts.adelielinux.org/enter_bug.cgi?product=gcompat
-.. _`gcompat mailing list`: https://lists.adelielinux.org/postorius/lists/gcompat.lists.adelielinux.org/
+.. _BTS: https://git.adelielinux.org/adelie/gcompat/-/issues
+.. _`submit an issue`: https://git.adelielinux.org/adelie/gcompat/-/issues/new
+.. _`WTI Lists`: https://lists.wilcox-tech.com/

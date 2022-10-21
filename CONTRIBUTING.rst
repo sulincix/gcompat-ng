@@ -4,7 +4,7 @@
 :Author:
   * **A. Wilcox**, documentation writer
 :Copyright:
-  © 2016-2018 Adélie Linux and contributors.  NCSA open source licence.
+  © 2016-2022 Adélie Linux and contributors.  NCSA open source licence.
 
 
 
@@ -86,7 +86,7 @@ GitLab Pull Requests
 
 #. Review your changes to ensure they are correct, and then submit the form.
 
-.. GitLab_: https://code.foxkit.us/
+.. GitLab_: https://git.adelielinux.org/
 
 
 Mailing List
@@ -110,5 +110,5 @@ Mailing List
              if you have made three commits, you will use the command
              ``git format-patch HEAD^^^``.
 
-#. Email the resulting patch to the gcompat@lists.adelielinux.org mailing
-   list, or use ``git send-email``.
+#. Email the resulting patch to the gcompat mailing list, or use
+   ``git send-email``.

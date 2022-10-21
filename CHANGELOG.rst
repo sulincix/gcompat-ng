@@ -5,10 +5,10 @@
   * **A. Wilcox**, documentation writer
   * **Contributors**, code
 :Copyright:
-  © 2016-2020 Adélie Software and contributors.  NCSA open source license.
+  © 2016-2022 Adélie Linux and contributors.  NCSA open source license.
 
 
-1.1 (202?-??-??)
+1.1 (202?-10-21)
 ================
 
 For detailed contributor information, see the gcompat Git repository.
