@@ -34,6 +34,12 @@ misc
 
 * Add a __libc_single_threaded stub.  Currently it always says we are MT.
 
+pthread
+-------
+
+* Add pthread_mutexattr_(get/set)kind_np, non-portable aliases of the
+  pthread_mutexattr_(get/set)type function.
+
 pwd
 ---
 
