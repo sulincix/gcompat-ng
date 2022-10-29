@@ -8,7 +8,7 @@
   © 2016-2022 Adélie Linux and contributors.  NCSA open source license.
 
 
-1.1 (202?-10-21)
+1.1 (2022-10-21)
 ================
 
 For detailed contributor information, see the gcompat Git repository.
