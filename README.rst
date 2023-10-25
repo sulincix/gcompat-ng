@@ -1,5 +1,5 @@
 ====================
- README for gcompat
+ README for gcompat-ng
 ====================
 :Authors:
  * **A. Wilcox**, initial concept, maintainer, lead developer
@@ -9,27 +9,9 @@
 :Copyright:
  © 2022 Adélie Linux and its contributors.  NCSA open source license.
 
- 
-.. image:: https://img.shields.io/badge/chat-on%20IRC-blue.svg
-   :target: ircs://irc.interlinked.me:6697/#Adelie-Support
+ Fork: 2023.10.25 sulincix
 
-.. image:: https://img.shields.io/codacy/grade/1e94efed5989436fa416ede784d4f7b6.svg
-   :target: https://app.codacy.com/project/awilfox/gcompat/dashboard
-
-.. image:: https://img.shields.io/coverity/scan/18278.svg
-   :target: https://scan.coverity.com/projects/adelielinux-gcompat
-
-.. image:: https://img.shields.io/badge/license-NCSA-lightgrey.svg
-   :target: LICENSE
-
-.. image:: https://repology.org/badge/vertical-allrepos/gcompat.svg
-   :target: https://repology.org/project/gcompat/versions
-
-.. image:: https://travis-ci.org/AdelieLinux/gcompat.svg?branch=current
-   :target: https://travis-ci.org/AdelieLinux/gcompat
-
-
-Introduction
+ Introduction
 ============
 
 This distribution contains the implementation of **gcompat**, a library which
@@ -47,11 +29,6 @@ unfied solution.  This can include fts_, libucontext_, obstack_, and others.
 has the same name as the glibc dynamic linker on glibc platforms; when a binary
 is run that uses glibc as its dynamic linker, the stub will run, redirecting it
 to use musl and automatically preloading the gcompat library.
-
-
-.. _fts: https://github.com/pullmoll/musl-fts/
-.. _libucontext: https://github.com/kaniini/libucontext/
-.. _obstack: https://github.com/pullmoll/musl-obstack/
 
 
 License
@@ -215,20 +192,3 @@ Environment variables
   Setting this variable will cause dlmopen and dlvsym to display the overrides
   they are performing, and may cause additional output to stderr with other
   functions in the future.
-
-
-
-
-Reporting Issues
-================
-
-gcompat is released by the Adélie Linux project in the hopes that it is useful
-to the community.  Current issues may be found at our BTS_; you may also
-`submit an issue`_ there.
-
-For general discussion, questions, or to submit a patch, please use the gcompat
-mailing list, hosted on `WTI Lists`_.
-
-.. _BTS: https://git.adelielinux.org/adelie/gcompat/-/issues
-.. _`submit an issue`: https://git.adelielinux.org/adelie/gcompat/-/issues/new
-.. _`WTI Lists`: https://lists.wilcox-tech.com/
