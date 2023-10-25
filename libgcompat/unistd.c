@@ -1,6 +1,7 @@
 #include <assert.h> /* assert */
 #include <fcntl.h>  /* O_CREAT */
 #include <limits.h> /* NGROUPS_MAX */
+#include <stdarg.h> /* va_list, va_start, va_end */
 #include <stddef.h> /* NULL, size_t */
 #include <unistd.h> /* confstr, getcwd, getgroups, ... */
 #include <errno.h>  /* ENOSYS, ENOMEM */
@@ -249,4 +250,14 @@ int execvp(const char *file, char *const argv[]) {
 int __close(int fd)
 {
 	return close(fd);
+}
+
+int fcntl64 (int fd, int cmd, ...)
+{
+  int ret;
+  va_list ap;
+  va_start(ap, cmd);
+  ret = fcntl(fd, cmd, ap);
+  va_end(ap);
+  return ret;
 }

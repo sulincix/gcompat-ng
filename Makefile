@@ -13,6 +13,7 @@ LIBGCOMPAT_SRC = \
 	libgcompat/locale.c		\
 	libgcompat/malloc.c		\
 	libgcompat/math.c		\
+	libgcompat/memory.c		\
 	libgcompat/misc.c		\
 	libgcompat/netdb.c		\
 	libgcompat/pthread.c		\

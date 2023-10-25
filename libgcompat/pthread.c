@@ -96,3 +96,12 @@ int pthread_mutexattr_setkind_np(pthread_mutexattr_t *attr, int kind)
 
 	return pthread_mutexattr_settype(attr, kind);
 }
+
+ int pthread_cond_clockwait (pthread_cond_t *cond,
+                             pthread_mutex_t *mutex,
+                             clockid_t clockid,
+                             const struct timespec *abstime)
+{
+	//FIXME
+    return 0;
+}

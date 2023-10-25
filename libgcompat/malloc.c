@@ -106,3 +106,7 @@ void muntrace(void)
 	/* Not implemented on purpose. */
 	return;
 }
+
+int posix_fallocate64 (int fd, off_t offset, off_t len){
+		return posix_fallocate (fd, offset, len);
+}
