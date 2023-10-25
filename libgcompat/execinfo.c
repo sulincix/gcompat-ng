@@ -37,6 +37,7 @@ int backtrace(void **array, int size)
 	return 10;
 }
 
+#ifndef __GLIBC__
 /**
  * Translate addresses into symbol information.
  *
@@ -61,6 +62,7 @@ const char **backtrace_symbols(void *const *array, int size)
 
 	return result;
 }
+
 
 /**
  * Write symbol information to a file without allocating memory.
@@ -95,3 +97,4 @@ void backtrace_symbols_fd(void *const *array, int size, int fd)
 		}
 	}
 }
+#endif

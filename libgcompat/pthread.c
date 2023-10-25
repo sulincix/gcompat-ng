@@ -6,6 +6,7 @@
 #include <unistd.h>  /* open, read */
 
 #include "alias.h" /* weak_alias */
+#ifndef __GLIBC__
 
 /**
  * Underlying function for pthread_cleanup_push.
@@ -13,14 +14,12 @@
 void __pthread_register_cancel(void *buf)
 {
 }
-
 /**
  * Underlying function for pthread_cleanup_push.
  */
 void __pthread_unregister_cancel(void *buf)
 {
 }
-
 /**
  * Register fork handlers.
  *
@@ -32,6 +31,7 @@ int __register_atfork(void (*prepare)(void), void (*parent)(void),
 	return pthread_atfork(prepare, parent, child);
 }
 weak_alias(__register_atfork, register_atfork);
+#endif
 
 /**
  * Get the name of a thread.

@@ -12,6 +12,7 @@
 
 #include "alias.h" /* weak_alias */
 
+#ifndef __GLIBC__
 int __res_ninit(res_state statp)
 {
 	int rc;
@@ -27,7 +28,6 @@ int __res_ninit(res_state statp)
 	return rc;
 }
 weak_alias(__res_ninit, res_ninit);
-
 int __res_nclose(res_state statp)
 {
 	if (statp == NULL) {
@@ -46,3 +46,4 @@ int __res_search(const char *dname, int class, int type, unsigned char *answer,
 {
 	return res_search(dname, class, type, answer, anslen);
 }
+#endif

@@ -30,7 +30,7 @@
 #include <unistd.h> /* sbrk */
 
 #include "alias.h" /* alias */
-
+#ifndef __GLIBC__
 struct mallinfo {
 	int arena;    /* Non-mmapped space allocated (bytes) */
 	int ordblks;  /* Number of free chunks */
@@ -43,7 +43,7 @@ struct mallinfo {
 	int fordblks; /* Total free space (bytes) */
 	int keepcost; /* Top-most, releasable space (bytes) */
 };
-
+#endif
 void *__libc_calloc(size_t nmemb, size_t size)
 {
 	return calloc(nmemb, size);
@@ -81,14 +81,14 @@ void *__sbrk(intptr_t increment)
 {
 	return sbrk(increment);
 }
-
+#ifndef __GLIBC__
 struct mallinfo mallinfo(void)
 {
 	struct mallinfo info;
 	memset(&info, 0, sizeof(info));
 	return info;
 }
-
+#endif
 int malloc_trim(size_t pad)
 {
 	/* This concept doesn't really map to musl's malloc */

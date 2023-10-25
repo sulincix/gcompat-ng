@@ -7,7 +7,7 @@
 #include <stddef.h> /* NULL, size_t */
 #include <stdio.h>  /* feof, fgets, fopen, fread, puts, v*printf */
 #include <string.h> /* strcmp */
-
+#ifndef __GLIBC__
 int __vasprintf_chk(char **strp, int flag, const char *format, va_list ap);
 int __vfprintf_chk(FILE *stream, int flag, const char *format, va_list ap);
 int __vsnprintf_chk(char *s, size_t n, int flag, size_t slen,
@@ -278,3 +278,4 @@ __dprintf_chk (int d, int flags, const char *format, ...)
 
 	return done;
 }
+#endif
